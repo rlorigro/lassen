@@ -41,10 +41,8 @@ include(ExternalProject)
 ExternalProject_Add(project_marginPolish
         GIT_REPOSITORY https://github.com/benedictpaten/marginPhase.git
         PREFIX ${CMAKE_CURRENT_BINARY_DIR}/external
-#        GIT_TAG 5c3caad9af827b3f326c1c3a93a93f18fc174ae6
-#        GIT_TAG polisher_rerefactor
-        GIT_TAG betterPolisher
-        BUILD_COMMAND make
+        GIT_TAG polisher_shasta
+        BUILD_COMMAND make MarginCore
         INSTALL_COMMAND ""
 )
 
@@ -54,7 +52,7 @@ ExternalProject_Get_Property(project_marginPolish INSTALL_DIR)
 # Create new library for external project (so it can be linked with lassen)
 add_library(marginPolish STATIC IMPORTED)
 set_property(TARGET marginPolish
-        PROPERTY IMPORTED_LOCATION ${INSTALL_DIR}/src/project_marginPolish-build/libcallConsensus.so)
+        PROPERTY IMPORTED_LOCATION ${INSTALL_DIR}/src/project_marginPolish-build/libMarginCore.so)
 
 # Define library as dependent on the downloaded project
 add_dependencies(marginPolish project_marginPolish)
@@ -63,7 +61,6 @@ add_dependencies(marginPolish project_marginPolish)
 include_directories(lassen
         ${INSTALL_DIR}/src/project_marginPolish/inc
         ${INSTALL_DIR}/src/project_marginPolish/externalTools/cPecan/inc
-        ${INSTALL_DIR}/src/project_marginPolish/externalTools/jsmn
         ${INSTALL_DIR}/src/project_marginPolish/externalTools/sonLib/C/inc)
 
 # Add runtime path for lassen so it can access external library

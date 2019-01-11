@@ -8,22 +8,29 @@ using std::cout;
 using std::vector;
 
 
-char* get_consensus(vector<string> sequences) {
-    int read_no = sequences.size();
+PolishParams* construct_call_consensus_parameters(string paramsPath) {
+    return getConsensusParameters(const_cast<char*>(paramsPath.c_str()));
+}
+void destruct_call_consensus_parameters(PolishParams *params) {
+    destroyConsensusParameters(params);
+}
+
+char* call_consensus(vector<string> sequences, vector<vector<uint8_t>> runLengths, vector<bool> strands, PolishParams *params) {
+    int64_t read_no = sequences.size();
     char* c_sequences[read_no];
+    uint8_t* c_runLengths[read_no];
+    bool c_strands[read_no];
     char* consensus;
 
-    // Convert to char* from string :(
-    int i = 0;
-    for (auto& element: sequences){
-        c_sequences[i] = const_cast<char*>((element).c_str());
-        i++;
+    // do vector to array conversion
+    for (unsigned i = 0; i < read_no; i++) {
+        c_sequences[i] = const_cast<char*>(sequences.at(i).c_str());
+        c_runLengths[i] = &runLengths.at(i).front();
+        c_strands[i] = strands.at(i);
     }
 
-//    cout << read_no << '\n';
-//    cout << sequences[0] << '\n';
-
-    consensus = callConsensus(read_no, c_sequences, c_sequences[0]);
+    // invoke c function
+    consensus = callConsensus(read_no, c_sequences, c_runLengths, c_strands, params);
 
     return consensus;
 }
