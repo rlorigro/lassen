@@ -90,6 +90,10 @@ add_executable(parse_fasta_windows src/parse_fasta_windows.cpp)
 set_property(TARGET parse_fasta_windows PROPERTY INSTALL_RPATH "$ORIGIN" "${INSTALL_DIR}/src/project_marginPolish-build/")
 target_link_libraries(parse_fasta_windows lassen marginPolish)
 
+add_executable(stupidTest src/stupid_test.cpp)
+set_property(TARGET stupidTest PROPERTY INSTALL_RPATH "$ORIGIN" "${INSTALL_DIR}/src/project_marginPolish-build/")
+target_link_libraries(stupidTest marginPolish)
+
 
 # Where to install
 set(BINARY_INSTALL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin)
