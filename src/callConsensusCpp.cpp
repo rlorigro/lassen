@@ -15,12 +15,12 @@ void destruct_call_consensus_parameters(PolishParams *params) {
     destroyConsensusParameters(params);
 }
 
-char* call_consensus(vector<string> sequences, vector<vector<uint8_t>> runLengths, vector<bool> strands, PolishParams *params) {
+RleString* call_consensus(vector<string> sequences, vector<vector<uint8_t>> runLengths, vector<uint8_t > strands, PolishParams *params) {
     int64_t read_no = sequences.size();
     char* c_sequences[read_no];
     uint8_t* c_runLengths[read_no];
-    bool c_strands[read_no];
-    char* consensus;
+    uint8_t c_strands[read_no];
+    RleString* consensus;
 
     // do vector to array conversion
     for (unsigned i = 0; i < read_no; i++) {

@@ -12,6 +12,6 @@ using std::vector;
 
 PolishParams* construct_call_consensus_parameters(string paramsPath);
 void destruct_call_consensus_parameters(PolishParams *params);
-char* call_consensus(vector<string> sequences, vector<vector<uint8_t>> runLengths, vector<bool> strands, PolishParams *params);
+RleString* call_consensus(vector<string> sequences, vector<vector<uint8_t>> runLengths, vector<uint8_t> strands, PolishParams *params);
 
 #endif //LASSEN_CALLCONSENSUSCPP_H

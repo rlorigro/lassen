@@ -19,8 +19,9 @@ set(SOURCES
         src/FastqReader.cpp
         src/FastaReader.cpp
         src/callConsensusCpp.cpp
-        src/parse_fasta_windows.cpp)
-#        src/parse_grouped_amplicons.cpp)
+#        src/parse_fasta_windows.cpp
+#        src/parse_grouped_amplicons.cpp
+        )
 
 add_library(lassen SHARED ${SOURCES})
 
@@ -68,7 +69,7 @@ set_property(TARGET lassen PROPERTY INSTALL_RPATH "$ORIGIN" "${INSTALL_DIR}/src/
 
 #-------------------------------------------------------------
 
-include_directories(${INSTALL_DIR}/src/project_marginPolish-build/)
+#include_directories(${INSTALL_DIR}/src/project_marginPolish-build/)
 
 add_executable(test_consensus src/test/test_consensus.cpp)
 set_property(TARGET test_consensus PROPERTY INSTALL_RPATH "$ORIGIN" "${INSTALL_DIR}/src/project_marginPolish-build/")
@@ -91,8 +92,7 @@ set_property(TARGET parse_fasta_windows PROPERTY INSTALL_RPATH "$ORIGIN" "${INST
 target_link_libraries(parse_fasta_windows lassen marginPolish)
 
 add_executable(stupidTest src/stupid_test.cpp)
-set_property(TARGET stupidTest PROPERTY INSTALL_RPATH "$ORIGIN" "${INSTALL_DIR}/src/project_marginPolish-build/")
-target_link_libraries(stupidTest marginPolish)
+target_link_libraries(stupidTest lassen MarginCore)
 
 
 # Where to install

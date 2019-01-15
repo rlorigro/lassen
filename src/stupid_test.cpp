@@ -10,7 +10,6 @@ using std::string;
 using std::cout;
 using std::cerr;
 using std::vector;
-using std::set;
 
 /*
 sequences->push_back("GATACA");
@@ -28,9 +27,9 @@ strands->push_back(TRUE);
 int main() {
     vector<string> sequences;
     vector<vector<uint8_t>> lengths;
-    vector<bool> strands;
+    vector<uint8_t> strands;
 
-    sequences.push_back("GATACA");
+    sequences.emplace_back("GATACA");
     vector<uint8_t> length;
     length.push_back(1);
     length.push_back(1);
@@ -39,11 +38,14 @@ int main() {
     length.push_back(1);
     length.push_back(1);
     lengths.push_back(length);
-    strands.push_back(TRUE);
+    strands.push_back(0);
 
     PolishParams *params = getConsensusParameters((char*)"../data/allParams.np.json");
 
-    char* consensus = call_consensus(sequences, lengths, strands, params);
-    cout << "Consensus: " << consensus << "\n";
+    RleString* consensus = call_consensus(sequences, lengths, strands, params);
+    cout << "Consensus: " << consensus->rleString << "\n";
+
+    destroyConsensusParameters(params);
+    destroyRleString(consensus);
     return 0;
 }
